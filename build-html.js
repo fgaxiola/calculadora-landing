@@ -45,7 +45,7 @@ const pages = {
   },
   'privacy-policy': {
     title: 'Privacy Policy | ROOTS - Rules Of Origin Trade Solutions',
-    canonical: 'https://roots.trade/privacy-policy.html',
+    canonical: 'https://roots.trade/privacy-policy',
     metaDescription: 'Privacy Policy for ROOTS - Rules Of Origin Trade Solutions. Learn how we collect, use, and protect your information.',
     ogTitle: 'Privacy Policy - ROOTS',
     ogDescription: 'Privacy Policy for ROOTS - Rules Of Origin Trade Solutions',
@@ -54,7 +54,7 @@ const pages = {
   },
   'terms-conditions': {
     title: 'Terms and Conditions | ROOTS - Rules Of Origin Trade Solutions',
-    canonical: 'https://roots.trade/terms-conditions.html',
+    canonical: 'https://roots.trade/terms-and-conditions',
     metaDescription: 'Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions. Read our terms of service and usage policies.',
     ogTitle: 'Terms and Conditions - ROOTS',
     ogDescription: 'Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions',
@@ -63,7 +63,7 @@ const pages = {
   },
   'about': {
     title: 'About Us | ROOTS - Rules Of Origin Trade Solutions',
-    canonical: 'https://roots.trade/about.html',
+    canonical: 'https://roots.trade/about',
     metaDescription: 'Learn about ROOTS - Rules Of Origin Trade Solutions. Our mission, vision, and commitment to simplifying rules of origin management.',
     ogTitle: 'About ROOTS - Rules Of Origin Trade Solutions',
     ogDescription: 'Learn about ROOTS and how we help companies manage rules of origin efficiently.',
