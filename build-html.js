@@ -14,13 +14,42 @@ const __dirname = path.dirname(__filename);
 
 // Configuración de páginas
 const pages = {
+  'index': {
+    title: 'ROOTS - Rules Of Origin Trade Solutions | Origin Calculation & Certification Software',
+    canonical: 'https://roots.trade/',
+    metaDescription: 'ROOTS - Rules Of Origin Trade Solutions. Reliable, comprehensive, and robust intra-company management of rules of origin. Calculate, validate, and certify origin for multiple Free Trade Agreements.',
+    ogTitle: 'ROOTS - Rules Of Origin Trade Solutions',
+    ogDescription: 'Reliable, comprehensive, and robust intra-company management of rules of origin. Calculate, validate, and certify origin for multiple Free Trade Agreements.',
+    navLinks: '<a class="" href="#main-pillars">Main Pillars</a><a class="" href="#system-features">System Features</a><a class="" href="#benefits">Benefits</a><a class="" href="#usage">Usage</a><a class="" href="#contact">Contact us</a>',
+    contentFile: 'pages/index-content.html',
+    isFullPage: true, // Indica que tiene contenido completo HTML, no solo texto
+    schemaType: 'SoftwareApplication',
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ROOTS - Rules Of Origin Trade Solutions",
+      "description": "Reliable, comprehensive, and robust intra-company management of rules of origin. Calculate, validate, and certify origin for multiple Free Trade Agreements.",
+      "url": "https://roots.trade",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5"
+      }
+    }
+  },
   'privacy-policy': {
     title: 'Privacy Policy | ROOTS - Rules Of Origin Trade Solutions',
     canonical: 'https://roots.trade/privacy-policy.html',
     metaDescription: 'Privacy Policy for ROOTS - Rules Of Origin Trade Solutions. Learn how we collect, use, and protect your information.',
     ogTitle: 'Privacy Policy - ROOTS',
     ogDescription: 'Privacy Policy for ROOTS - Rules Of Origin Trade Solutions',
-    navLinks: '<a class="" href="/">Home</a><a class="" href="/about.html">About</a>',
+    navLinks: '<a class="" href="/">Home</a><a class="" href="#main-pillars">Main Pillars</a><a class="" href="#system-features">System Features</a><a class="" href="#benefits">Benefits</a><a class="" href="#usage">Usage</a><a class="" href="#contact">Contact us</a>',
     contentFile: 'pages/privacy-policy-content.html'
   },
   'terms-conditions': {
@@ -29,7 +58,7 @@ const pages = {
     metaDescription: 'Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions. Read our terms of service and usage policies.',
     ogTitle: 'Terms and Conditions - ROOTS',
     ogDescription: 'Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions',
-    navLinks: '<a class="" href="/">Home</a><a class="" href="/about.html">About</a>',
+    navLinks: '<a class="" href="/">Home</a><a class="" href="#main-pillars">Main Pillars</a><a class="" href="#system-features">System Features</a><a class="" href="#benefits">Benefits</a><a class="" href="#usage">Usage</a><a class="" href="#contact">Contact us</a>',
     contentFile: 'pages/terms-conditions-content.html'
   },
   'about': {
@@ -38,7 +67,7 @@ const pages = {
     metaDescription: 'Learn about ROOTS - Rules Of Origin Trade Solutions. Our mission, vision, and commitment to simplifying rules of origin management.',
     ogTitle: 'About ROOTS - Rules Of Origin Trade Solutions',
     ogDescription: 'Learn about ROOTS and how we help companies manage rules of origin efficiently.',
-    navLinks: '<a class="" href="/">Home</a><a class="" href="/privacy-policy.html">Privacy Policy</a><a class="" href="/terms-conditions.html">Terms</a>',
+    navLinks: '<a class="" href="/">Home</a><a class="" href="#main-pillars">Main Pillars</a><a class="" href="#system-features">System Features</a><a class="" href="#benefits">Benefits</a><a class="" href="#usage">Usage</a><a class="" href="#contact">Contact us</a>',
     contentFile: 'pages/about-content.html'
   }
 };
@@ -85,8 +114,36 @@ function generateHTML(pageConfig) {
   }).trim();
   
   const header = replacePlaceholders(headerTemplate, {
-    NAV_LINKS: pageConfig.navLinks
+    NAV_LINKS: pageConfig.navLinks,
+    LOGO_SRC: './public/img/logo-header-new.png' // Se reemplazará después del build por Vite
   });
+  
+  // Determinar el tipo de contenido y structured data
+  const isFullPage = pageConfig.isFullPage || false;
+  const schemaType = pageConfig.schemaType || 'WebPage';
+  const schemaData = pageConfig.schemaData || {
+    "@context": "https://schema.org",
+    "@type": schemaType,
+    "name": pageConfig.ogTitle,
+    "description": pageConfig.metaDescription,
+    "url": pageConfig.canonical
+  };
+  
+  // Construir el contenido del main según el tipo
+  let mainContent;
+  if (isFullPage) {
+    // Contenido completo HTML (como index.html)
+    mainContent = pageContent;
+  } else {
+    // Contenido de texto plano con wrapper
+    mainContent = `<section class="wrapper-fw" id="main-content">
+          <div class="container grid-split-rows pp p-min">
+            <div class="flex p-big plain-text-content">
+              ${pageContent}
+            </div>
+          </div>
+        </section>`;
+  }
   
   // Construir HTML completo
   return `<!DOCTYPE html>
@@ -94,31 +151,19 @@ function generateHTML(pageConfig) {
   <head>
     ${head}
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "${pageConfig.ogTitle}",
-        "description": "${pageConfig.metaDescription}",
-        "url": "${pageConfig.canonical}"
-      }
+      ${JSON.stringify(schemaData, null, 6)}
     </script>
   </head>
   <body>
     <div id="app">
       <main>
-        <section class="wrapper-fw" id="main-content">
-          <div class="container grid-split-rows pp p-min">
-            <div class="flex p-big plain-text-content">
-              ${pageContent}
-            </div>
-          </div>
-        </section>
+        ${mainContent}
         ${footerTemplate}
       </main>
       ${header}
     </div>
     <script type="module" src="/main.js"></script>
-    <style>
+    ${isFullPage ? '' : `<style>
       .plain-text-content h1 {
         margin-bottom: 30px;
       }
@@ -146,7 +191,7 @@ function generateHTML(pageConfig) {
         color: inherit;
         text-decoration: underline;
       }
-    </style>
+    </style>`}
   </body>
 </html>`;
 }
