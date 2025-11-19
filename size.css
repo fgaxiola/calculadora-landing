@@ -1,0 +1,24 @@
+:root {
+  /* --p-size: 24px;
+    --h1-size: 64px; */
+  --p-size: 18px;
+  --p-normal-size: 16px;
+  --h1-size: 48px;
+  --h3-size: 20px;
+  --a-size: 14px;
+  --a-menu-size: 16px;
+  --slider-p-size: 20px;
+
+  --p-size-m: 17px;
+  --h1-size-m: 40px;
+  --a-size-m: 12px;
+
+  --p-size-s: 16px;
+  --h1-size-s: 34px;
+  --a-size-s: 12px;
+
+  --text-block-padding-m: 60px;
+  --text-block-padding-s: 35px;
+  --text-block-margin-s: 30px;
+
+}

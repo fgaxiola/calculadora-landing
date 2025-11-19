@@ -1,0 +1,17 @@
+:root{
+    --main-text-color: #3E4758;
+    --main-dark-element-color: #fff;
+    --main-dark-text-color: #0393a4;
+    --main-h-color: #0393a4;
+    --main-h-hover-color: #1e377c;
+    --main-p-color: #3E4758;
+    /* --main-bg-color: #101E28; */
+    --main-bg-color: #0393a4;
+    /* --main-element-bg-color: #966A37; */
+    --main-element-bg-color: #fff;
+    --main-element-bg-color-hover: #c39764;
+    /* --slider-bg: #DFD6C9; */
+    --slider-bg: #F4F5F7;
+    --color-gold: #966A37;
+    --color-copyright: #fff;
+}
