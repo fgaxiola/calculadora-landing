@@ -18,12 +18,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Manejar scroll automático cuando se carga la página con hash (desde otra página)
+  function handleHashScroll() {
+    const hash = window.location.hash;
+    if (hash) {
+      const targetId = hash.substring(1); // Remover el #
+
+      // Función para intentar hacer scroll
+      const attemptScroll = (retries = 0) => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          // Elemento encontrado, hacer scroll
+          window.scrollTo({
+            top: element.offsetTop - 80,
+            left: 0,
+            behavior: "smooth",
+          });
+        } else if (retries < 10) {
+          // Elemento no encontrado aún, reintentar después de un breve delay
+          setTimeout(() => attemptScroll(retries + 1), 50);
+        }
+      };
+
+      // Esperar un poco para que la página termine de cargar
+      setTimeout(() => {
+        attemptScroll();
+      }, 100);
+    }
+  }
+
+  // Ejecutar scroll automático al cargar
+  handleHashScroll();
+
+  // También manejar cuando el hash cambia sin recargar la página
+  window.addEventListener("hashchange", handleHashScroll);
+
   // Manejar clicks en enlaces del menú
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute("href").substring(1);
-      scroll(targetId);
+      const href = this.getAttribute("href");
+
+      // Si el enlace apunta a home con hash (/#seccion)
+      if (href.startsWith("/#")) {
+        const targetId = href.substring(2); // Remover /#
+        // Si estamos en home, hacer scroll
+        if (
+          window.location.pathname === "/" ||
+          window.location.pathname === "/index.html"
+        ) {
+          e.preventDefault();
+          scroll(targetId);
+        }
+        // Si no estamos en home, dejar que el navegador navegue normalmente
+        // El hash se manejará en handleHashScroll cuando se cargue la nueva página
+      }
+      // Si el enlace es solo hash (#seccion), hacer scroll en la misma página
+      else if (href.startsWith("#")) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        scroll(targetId);
+      }
     });
   });
 
