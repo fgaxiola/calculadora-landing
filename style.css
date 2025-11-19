@@ -101,14 +101,9 @@ footer .container {
   background-repeat: no-repeat;
   background-position: center;
 }
-.social .fb {
-  background-image: url(./public/img/icon-fb.svg);
-}
 .social .tw {
-  background-image: url(./public/img/icon-tw.svg);
-}
-.social .li {
-  background-image: url(./public/img/icon-li.svg);
+  background-image: url(./public/img/x.png);
+  filter: brightness(0) invert(1);
 }
 .social a {
   text-decoration: none;
@@ -369,7 +364,6 @@ main {
 }
 .main-slider {
   background-position: right center;
-  /* background-image: url(./public/img/main-slider-bg.png); */
   background-repeat: no-repeat;
 }
 .main-slider .grid-split-rows h1 {
@@ -529,34 +523,34 @@ textarea {
   padding: 12px 15px;
   resize: vertical;
 }
-.flex{
+.flex {
   display: flex;
 }
-@media (max-width: 768px){
-  .flex.center{
+@media (max-width: 768px) {
+  .flex.center {
     justify-content: center;
   }
-  .grid-row.three{
+  .grid-row.three {
     grid-template-columns: 1fr;
   }
 }
-.hbspt-form .actions{
+.hbspt-form .actions {
   /* text-align: right; */
 }
-.hs-form-iframe{
+.hs-form-iframe {
   /* display: none !important; */
 }
-.hs-fieldtype-text{
+.hs-fieldtype-text {
   /* display: none !important; */
 }
-.hs-input{
+.hs-input {
   width: 100%;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   padding: 10px;
   outline: none;
-  color: rgb(10, 57, 63)
+  color: rgb(10, 57, 63);
 }
 /* .hs-fieldtype-intl-phone{ */
 
@@ -564,34 +558,34 @@ textarea {
 /* .hs-fieldtype-intl-phone.hs-input select{
   width: 100px;
 } */
-.hs-fieldtype-intl-phone{
+.hs-fieldtype-intl-phone {
   display: flex;
   gap: 20px;
   width: 100%;
 }
-.hs-fieldtype-intl-phone.hs-input select{
+.hs-fieldtype-intl-phone.hs-input select {
   /* width: 100px !important; */
 }
-.hs-fieldtype-intl-phone.hs-input input{
-  width: 60%!important;
+.hs-fieldtype-intl-phone.hs-input input {
+  width: 60% !important;
 }
-.hs-form-field{
+.hs-form-field {
   text-align: left;
   padding-top: 5px;
   padding-bottom: 5px;
   display: block;
 }
-.hs-form-field label{
+.hs-form-field label {
   margin-bottom: 5px;
   color: #fff;
   text-align: left;
   display: block;
 }
 
-.hubspot-link__container{
+.hubspot-link__container {
   display: none !important;
 }
-.hs-button{
+.hs-button {
   padding: 12px 30px;
   text-transform: uppercase;
   font-weight: 600;
@@ -604,94 +598,94 @@ textarea {
   transition: all 0.2s ease-in-out;
   /* text-decoration: none !important; */
 }
-.hs-button:hover{
+.hs-button:hover {
   cursor: pointer;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
 }
-.hs-input.hs-fieldtype-intl-phone select{
+.hs-input.hs-fieldtype-intl-phone select {
   /* display: none; */
   max-width: 30% !important;
 }
-.hs-form-private{
+.hs-form-private {
   display: grid;
   /* gap: 5px; */
 }
-.hs-error-msgs{
+.hs-error-msgs {
   margin-top: 10px;
   margin-bottom: 0;
   text-align: left;
 }
-.hs-error-msg{
+.hs-error-msg {
   color: #000 !important;
 }
-.plain-text-content{
+.plain-text-content {
   display: flex;
   padding-left: 30px;
   padding-right: 30px;
   align-items: flex-start;
 }
-.plain-text-content h1{
+.plain-text-content h1 {
   text-align: center;
 }
-.plain-text-content h2{
+.plain-text-content h2 {
   margin-top: 15px;
 }
-.plain-text-content h3{
+.plain-text-content h3 {
   margin-bottom: 20px;
 }
-.plain-text-content p{
+.plain-text-content p {
   line-height: 1.3;
   font-size: 18px;
   margin-top: 0;
 }
-.plain-text-content a{
+.plain-text-content a {
   color: #0393a4;
 }
-a.logo{
+a.logo {
   width: 180px;
   display: table;
 }
-img.logo{
+img.logo {
   max-height: max-content !important;
   height: auto !important;
   width: 75%;
 }
-h2{
+h2 {
   font-size: 24px;
   color: #0a393f;
   margin-bottom: 20px;
   margin-top: 10px;
 }
-.wrapper-absolute{
+.wrapper-absolute {
   grid-template-columns: 35%;
 }
-.grid-split{
+.grid-split {
   grid-template-columns: 65%;
 }
-ul li{
+ul li {
   text-align: left;
   color: rgba(255, 255, 255, 0.85);
 }
-ul ul{
+ul ul {
   margin-top: 10px;
 }
-ul ul li{
+ul ul li {
   /* margin-bottom: 1px; */
 }
-.reverse .wrapper-absolute{
+.reverse .wrapper-absolute {
   grid-template-columns: 35%;
   background-color: #f4f5f7;
   justify-content: right;
 }
-.reverse .grid-split{
+.reverse .grid-split {
   grid-template-columns: 65%;
 }
-.reverse .grid-split .text-block{
+.reverse .grid-split .text-block {
   background-color: #f4f5f7;
 }
 .reverse h1,
 .reverse p,
-.reverse li{
+.reverse li {
   color: #0a393f;
 }
 .grid-row.hover .item.no-hover:hover {
