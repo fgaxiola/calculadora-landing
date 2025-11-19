@@ -769,6 +769,12 @@ ul ul li {
   padding: 0;
   min-width: 100%;
   min-height: 100%;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+}
+
+.team-profile:hover .profile-photo img {
+  filter: grayscale(0%);
 }
 
 .profile-content {
@@ -829,4 +835,10 @@ ul ul li {
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+}
+
+.group-photo:hover img {
+  filter: grayscale(0%);
 }
