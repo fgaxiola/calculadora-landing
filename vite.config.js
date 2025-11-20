@@ -7,6 +7,7 @@ import {
   readdirSync,
 } from "fs";
 import { join } from "path";
+import { createReadStream } from "fs";
 
 // Plugin para copiar HTMLs adicionales a dist/ e inyectar assets
 function copyHtmlFiles() {
@@ -18,6 +19,7 @@ function copyHtmlFiles() {
         "about.html",
         "privacy-policy.html",
         "terms-conditions.html",
+        "404.html",
       ];
 
       // Copiar sitemap.xml, robots.txt y .htaccess a dist/
@@ -239,22 +241,132 @@ function cleanUrls() {
     "/about": "/about.html",
     "/privacy-policy": "/privacy-policy.html",
     "/terms-and-conditions": "/terms-conditions.html",
+    "/404": "/404.html",
   };
 
+  // Rutas válidas que existen
+  const validRoutes = ["/", "/about", "/privacy-policy", "/terms-and-conditions", "/404"];
+
   const handleRequest = (req, res, next) => {
-    // Manejar rutas exactas
+    // Ignorar rutas especiales de Vite (HMR, client, etc.)
+    if (req.url.startsWith("/@") || req.url.startsWith("/node_modules/")) {
+      return next();
+    }
+
+    // Ignorar archivos estáticos reales (assets, img, etc.)
+    const staticExtensions = [".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".eot", ".json", ".xml", ".txt"];
+    const isStaticFile = staticExtensions.some(ext => req.url.endsWith(ext)) ||
+      req.url.startsWith("/assets/") ||
+      req.url.startsWith("/img/") ||
+      req.url.startsWith("/public/") ||
+      req.url === "/robots.txt" ||
+      req.url === "/sitemap.xml";
+
+    if (isStaticFile) {
+      return next();
+    }
+
+    // Si es la raíz, continuar normalmente
+    if (req.url === "/" || req.url === "/index.html") {
+      return next();
+    }
+
+    // Manejar rutas exactas del routeMap
     if (routeMap[req.url]) {
       console.log(`🔄 Redirecting ${req.url} to ${routeMap[req.url]}`);
+      // Si es la ruta /404, establecer código de estado 404
+      if (req.url === "/404") {
+        res.statusCode = 404;
+      }
       req.url = routeMap[req.url];
       return next();
     }
+    
     // Manejar rutas con trailing slash
     const urlWithoutSlash = req.url.replace(/\/$/, "");
     if (routeMap[urlWithoutSlash]) {
       console.log(`🔄 Redirecting ${req.url} to ${routeMap[urlWithoutSlash]}`);
+      // Si es la ruta /404, establecer código de estado 404
+      if (urlWithoutSlash === "/404") {
+        res.statusCode = 404;
+      }
       req.url = routeMap[urlWithoutSlash];
       return next();
     }
+
+    // Si la ruta no es válida y no es un archivo estático, redirigir a 404
+    if (!validRoutes.includes(req.url) && !validRoutes.includes(urlWithoutSlash) && !req.url.endsWith(".html")) {
+      console.log(`🔄 Route not found: ${req.url}, redirecting to /404.html`);
+      // En preview mode, servir el archivo 404.html manualmente con código 404
+      const distDir = join(process.cwd(), "dist");
+      const filePath = join(distDir, "404.html");
+      
+      if (existsSync(filePath)) {
+        const fileContent = readFileSync(filePath, "utf-8");
+        res.statusCode = 404;
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.end(fileContent);
+        return;
+      } else {
+        // Fallback: cambiar URL y marcar como 404
+        req.originalUrl = req.url;
+        req.url = "/404.html";
+        req.is404 = true;
+        return next();
+      }
+    }
+    
+    next();
+  };
+
+  // Middleware adicional para establecer código 404 en preview
+  const set404Status = (req, res, next) => {
+    // Si esta es una respuesta 404, interceptar writeHead para establecer el código correcto
+    if (req.is404) {
+      // Interceptar writeHead antes de que Vite lo llame
+      const originalWriteHead = res.writeHead;
+      const originalStatus = res.statusCode;
+      
+      // Guardar el estado original
+      let statusCodeIntercepted = false;
+      
+      res.writeHead = function (statusCode, statusMessage, headers) {
+        // Si Vite intenta escribir 200, cambiarlo a 404
+        if (statusCode === 200 && !statusCodeIntercepted) {
+          statusCodeIntercepted = true;
+          console.log(`🔧 Changing status code from 200 to 404 for ${req.originalUrl || req.url}`);
+          // Llamar al writeHead original con código 404
+          if (typeof statusMessage === 'object') {
+            // writeHead(statusCode, headers)
+            return originalWriteHead.call(this, 404, statusMessage);
+          } else if (statusMessage) {
+            // writeHead(statusCode, statusMessage, headers)
+            return originalWriteHead.call(this, 404, "Not Found", headers);
+          } else {
+            // writeHead(statusCode)
+            return originalWriteHead.call(this, 404);
+          }
+        }
+        return originalWriteHead.apply(this, arguments);
+      };
+
+      // También interceptar statusCode directamente
+      Object.defineProperty(res, 'statusCode', {
+        get: function() {
+          return this._statusCode || 200;
+        },
+        set: function(code) {
+          if (code === 200 && req.is404) {
+            console.log(`🔧 Changing statusCode from 200 to 404 for ${req.originalUrl || req.url}`);
+            this._statusCode = 404;
+          } else {
+            this._statusCode = code;
+          }
+        },
+        configurable: true
+      });
+    }
+    
     next();
   };
 
@@ -264,8 +376,10 @@ function cleanUrls() {
       server.middlewares.use(handleRequest);
     },
     configurePreviewServer(server) {
-      // En preview, el middleware se ejecuta antes de servir archivos estáticos
+      // En preview, usar ambos middlewares
+      // Primero el que maneja las rutas, luego el que establece el código 404
       server.middlewares.use(handleRequest);
+      server.middlewares.use(set404Status);
     },
   };
 }
@@ -279,6 +393,7 @@ export default defineConfig({
         about: "./about.html",
         "privacy-policy": "./privacy-policy.html",
         "terms-conditions": "./terms-conditions.html",
+        "404": "./404.html",
       },
     },
   },

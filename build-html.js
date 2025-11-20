@@ -157,6 +157,37 @@ const pages = {
       dateModified: "2024-11-19",
     },
   },
+  404: {
+    title:
+      "404 - Página no encontrada | ROOTS - Rules Of Origin Trade Solutions",
+    canonical: "https://roots.trade/404",
+    metaDescription:
+      "Página no encontrada - ROOTS - Rules Of Origin Trade Solutions",
+    ogTitle: "404 - Página no encontrada - ROOTS",
+    ogDescription:
+      "Página no encontrada - ROOTS - Rules Of Origin Trade Solutions",
+    navLinks:
+      '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
+    contentFile: "pages/404-content.html",
+    isFullPage: true,
+    schemaType: "WebPage",
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "404 - Página no encontrada",
+      description:
+        "Página no encontrada - ROOTS - Rules Of Origin Trade Solutions",
+      url: "https://roots.trade/404",
+      inLanguage: "en-US",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+      },
+      datePublished: "2024-01-01",
+      dateModified: "2024-11-19",
+    },
+  },
 };
 
 // Leer componentes

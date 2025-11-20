@@ -82,8 +82,8 @@
 # Prevenir listado de directorios
 Options -Indexes
 
-# Páginas de error personalizadas (opcional)
-# ErrorDocument 404 /404.html
+# Páginas de error personalizadas
+ErrorDocument 404 /404.html
 # ErrorDocument 500 /500.html
 
 # Charset UTF-8
