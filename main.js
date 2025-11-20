@@ -47,8 +47,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // y sumar scrollY para obtener posición absoluta
       const headerOffset = 94; // Altura del header fijo (50px) + padding
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
       window.scrollTo({
         top: offsetPosition,
         left: 0,
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
   const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
   const mobileMenuClose = document.querySelector(".mobile-menu-close");
-  
+
   if (mobileMenuToggle && mobileMenuOverlay) {
     function openMobileMenu() {
       mobileMenuOverlay.setAttribute("aria-hidden", "false");
@@ -82,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Toggle mobile menu
     mobileMenuToggle.addEventListener("click", function () {
       const isOpen = mobileMenuOverlay.getAttribute("aria-hidden") === "false";
-      
+
       if (isOpen) {
         closeMobileMenu();
       } else {
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     mobileMenuLinks.forEach((link) => {
       link.addEventListener("click", function (e) {
         const href = this.getAttribute("href");
-        
+
         // Si el enlace apunta a home con hash (/#seccion)
         if (href && href.startsWith("/#")) {
           const targetId = href.substring(2); // Remover /#
@@ -196,10 +197,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let stableCount = 0;
         const checkInterval = 100;
         const stableThreshold = 5; // Necesita estar estable por 5 checks consecutivos (500ms)
-        
+
         const checkStability = () => {
           const currentHeight = document.body.scrollHeight;
-          
+
           if (currentHeight === lastHeight) {
             stableCount++;
             if (stableCount >= stableThreshold) {
@@ -210,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
             stableCount = 0;
             lastHeight = currentHeight;
           }
-          
+
           maxWait -= checkInterval;
           if (maxWait > 0) {
             setTimeout(checkStability, checkInterval);
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callback();
           }
         };
-        
+
         checkStability();
       }
 
@@ -238,9 +239,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     requestAnimationFrame(() => {
                       // Usar getBoundingClientRect para posición precisa
                       const headerOffset = 94; // Altura del header fijo
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                      
+                      const elementPosition =
+                        element.getBoundingClientRect().top;
+                      const offsetPosition =
+                        elementPosition + window.pageYOffset - headerOffset;
+
                       window.scrollTo({
                         top: offsetPosition,
                         left: 0,
