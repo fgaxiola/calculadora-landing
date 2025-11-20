@@ -310,6 +310,8 @@ main {
 .mobile-menu-logo {
   margin-bottom: 15px;
   text-align: center;
+  display: block;
+  text-decoration: none;
 }
 .mobile-menu-logo img {
   max-width: 200px;
