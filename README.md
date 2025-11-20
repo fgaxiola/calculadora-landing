@@ -6,6 +6,8 @@ Landing page para ROOTS, una plataforma especializada en la determinación, vali
 
 Necesitas los archivos /index.html, /about.html, etc. Para que funcione "npm run dev" y desarrollar con hot reload. Aunque el contenido se modifique en /pages/index-content.html y cuando se haga "npm run build" se compile a /dist/index.html.
 
+Siempre que hagas un "npm run build" haz un "cp .htaccess dist"
+
 ## 🚀 Inicio Rápido
 
 ### Prerrequisitos

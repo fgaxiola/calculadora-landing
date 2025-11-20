@@ -9,18 +9,15 @@
     # RewriteCond %{HTTPS} off
     # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
-    # Rutas limpias para páginas estáticas
+    # Si el archivo o directorio existe, servirlo directamente (incluye sitemap.xml y robots.txt)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Rutas limpias para páginas estáticas (solo si el archivo no existe)
     RewriteRule ^privacy-policy/?$ /privacy-policy.html [L]
     RewriteRule ^terms-and-conditions/?$ /terms-conditions.html [L]
     RewriteRule ^about/?$ /about.html [L]
-    
-    # Permitir acceso a sitemap.xml y robots.txt
-    RewriteRule ^sitemap\.xml$ /sitemap.xml [L]
-    RewriteRule ^robots\.txt$ /robots.txt [L]
-    
-    # Si el archivo o directorio existe, servirlo directamente
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
     
     # Redirigir todas las rutas a index.html (para SPA si fuera necesario)
     # RewriteRule ^ index.html [L]
@@ -109,6 +106,21 @@ AddDefaultCharset UTF-8
     AddType application/javascript js
     AddType text/css css
     AddType image/svg+xml svg svgz
+    AddType application/xml xml
+    AddType text/xml xml
+    AddType text/plain txt
     AddEncoding gzip svgz
 </IfModule>
+
+# Asegurar que sitemap.xml y robots.txt no sean procesados como PHP
+<Files "sitemap.xml">
+    <IfModule mod_php.c>
+        php_flag engine off
+    </IfModule>
+</Files>
+<Files "robots.txt">
+    <IfModule mod_php.c>
+        php_flag engine off
+    </IfModule>
+</Files>
 
