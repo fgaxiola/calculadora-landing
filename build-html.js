@@ -38,8 +38,8 @@ const pages = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       inLanguage: "en-US",
-      image: "https://roots.trade/public/img/slider-img1.jpg",
-      screenshot: "https://roots.trade/public/img/slider-img1.jpg",
+      image: "https://roots.trade/img/slider-img1.jpg",
+      screenshot: "https://roots.trade/img/slider-img1.jpg",
       datePublished: "2024-01-01",
       publisher: {
         "@type": "Organization",
@@ -47,7 +47,7 @@ const pages = {
         url: "https://roots.trade",
         logo: {
           "@type": "ImageObject",
-          url: "https://roots.trade/public/img/logo-new.png",
+          url: "https://roots.trade/img/logo-new.png",
         },
       },
       offers: {
@@ -149,7 +149,7 @@ const pages = {
         "@type": "Organization",
         name: "ROOTS - Rules Of Origin Trade Solutions",
         url: "https://roots.trade",
-        logo: "https://roots.trade/public/img/logo-new.png",
+        logo: "https://roots.trade/img/logo-new.png",
         description:
           "An interdisciplinary team of specialists with extensive experience in international trade, foreign trade, regulation, international agreements, and public policy.",
       },
