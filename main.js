@@ -39,12 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
     currentYearEl.textContent = new Date().getFullYear();
   }
 
-  // Función scroll (definida primero para que esté disponible)
+  // Función scroll mejorada que espera a que el contenido esté completamente renderizado
   function scroll(id) {
     const element = document.getElementById(id);
     if (element) {
+      // Usar getBoundingClientRect para obtener posición precisa relativa al viewport
+      // y sumar scrollY para obtener posición absoluta
+      const headerOffset = 94; // Altura del header fijo (50px) + padding
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
       window.scrollTo({
-        top: element.offsetTop - 80,
+        top: offsetPosition,
         left: 0,
         behavior: "smooth",
       });
@@ -104,13 +110,35 @@ document.addEventListener("DOMContentLoaded", function () {
       link.addEventListener("click", function (e) {
         const href = this.getAttribute("href");
         
-        // If it's a hash link (same page), close menu with fade-out
-        if (href && (href.startsWith("#") || href.startsWith("/#"))) {
+        // Si el enlace apunta a home con hash (/#seccion)
+        if (href && href.startsWith("/#")) {
+          const targetId = href.substring(2); // Remover /#
+          // Si estamos en home, hacer scroll
+          if (
+            window.location.pathname === "/" ||
+            window.location.pathname === "/index.html"
+          ) {
+            e.preventDefault();
+            closeMobileMenu();
+            // Small delay to allow fade-out animation, then scroll
+            setTimeout(() => {
+              scroll(targetId);
+            }, 300);
+          }
+          // Si no estamos en home, dejar que el navegador navegue normalmente
+          // El hash se manejará en handleHashScroll cuando se cargue la nueva página
+          // Solo cerramos el menú
+          else {
+            closeMobileMenu();
+          }
+        }
+        // Si el enlace es solo hash (#seccion), hacer scroll en la misma página
+        else if (href && href.startsWith("#")) {
           e.preventDefault();
           closeMobileMenu();
           // Small delay to allow fade-out animation, then scroll
           setTimeout(() => {
-            const targetId = href.startsWith("/#") ? href.substring(2) : href.substring(1);
+            const targetId = href.substring(1);
             scroll(targetId);
           }, 300);
         } else {
@@ -128,26 +156,121 @@ document.addEventListener("DOMContentLoaded", function () {
     if (hash) {
       const targetId = hash.substring(1); // Remover el #
 
+      // Función para verificar si todas las imágenes están cargadas
+      function waitForImages(callback) {
+        const images = document.querySelectorAll("img");
+        let loadedCount = 0;
+        const totalImages = images.length;
+
+        if (totalImages === 0) {
+          callback();
+          return;
+        }
+
+        images.forEach((img) => {
+          if (img.complete) {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              callback();
+            }
+          } else {
+            img.addEventListener("load", () => {
+              loadedCount++;
+              if (loadedCount === totalImages) {
+                callback();
+              }
+            });
+            img.addEventListener("error", () => {
+              loadedCount++;
+              if (loadedCount === totalImages) {
+                callback();
+              }
+            });
+          }
+        });
+      }
+
+      // Función para verificar si el layout está estable
+      function waitForLayoutStable(callback, maxWait = 5000) {
+        let lastHeight = document.body.scrollHeight;
+        let stableCount = 0;
+        const checkInterval = 100;
+        const stableThreshold = 5; // Necesita estar estable por 5 checks consecutivos (500ms)
+        
+        const checkStability = () => {
+          const currentHeight = document.body.scrollHeight;
+          
+          if (currentHeight === lastHeight) {
+            stableCount++;
+            if (stableCount >= stableThreshold) {
+              callback();
+              return;
+            }
+          } else {
+            stableCount = 0;
+            lastHeight = currentHeight;
+          }
+          
+          maxWait -= checkInterval;
+          if (maxWait > 0) {
+            setTimeout(checkStability, checkInterval);
+          } else {
+            // Timeout, ejecutar callback de todas formas
+            callback();
+          }
+        };
+        
+        checkStability();
+      }
+
       // Función para intentar hacer scroll
       const attemptScroll = (retries = 0) => {
         const element = document.getElementById(targetId);
         if (element) {
-          // Elemento encontrado, hacer scroll
-          window.scrollTo({
-            top: element.offsetTop - 80,
-            left: 0,
-            behavior: "smooth",
+          // Esperar a que las imágenes se carguen
+          waitForImages(() => {
+            // Esperar a que el layout esté estable
+            waitForLayoutStable(() => {
+              // Esperar frames adicionales y delay para asegurar renderizado completo
+              setTimeout(() => {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      // Usar getBoundingClientRect para posición precisa
+                      const headerOffset = 94; // Altura del header fijo
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                      
+                      window.scrollTo({
+                        top: offsetPosition,
+                        left: 0,
+                        behavior: "smooth",
+                      });
+                    });
+                  });
+                });
+              }, 300);
+            });
           });
-        } else if (retries < 10) {
-          // Elemento no encontrado aún, reintentar después de un breve delay
-          setTimeout(() => attemptScroll(retries + 1), 50);
+        } else if (retries < 30) {
+          // Aumentar reintentos para dar más tiempo
+          setTimeout(() => attemptScroll(retries + 1), 100);
         }
       };
 
-      // Esperar un poco para que la página termine de cargar
-      setTimeout(() => {
-        attemptScroll();
-      }, 100);
+      // Esperar a que la página esté completamente cargada
+      // Usar window.load si aún no se ha disparado, o esperar un delay más largo
+      if (document.readyState === "complete") {
+        setTimeout(() => {
+          attemptScroll();
+        }, 1500);
+      } else {
+        window.addEventListener("load", () => {
+          setTimeout(() => {
+            attemptScroll();
+          }, 1500);
+        });
+      }
     }
   }
 
