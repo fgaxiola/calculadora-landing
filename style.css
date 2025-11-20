@@ -770,11 +770,13 @@ ul ul li {
   min-width: 100%;
   min-height: 100%;
   filter: grayscale(100%);
-  transition: filter 0.4s ease;
+  transform: scale(1);
+  transition: filter 0.4s ease, transform 0.4s ease;
 }
 
 .team-profile:hover .profile-photo img {
   filter: grayscale(0%);
+  transform: scale(1.05);
 }
 
 .profile-content {
@@ -836,9 +838,15 @@ ul ul li {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   filter: grayscale(100%);
-  transition: filter 0.4s ease;
+  transform: scale(1);
+  transition: filter 0.4s ease, transform 0.4s ease;
 }
 
 .group-photo:hover img {
   filter: grayscale(0%);
+  transform: scale(1.03);
+}
+
+.hbspt-form form .hs-form-field label span {
+  color: #fff !important;
 }
