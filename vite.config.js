@@ -20,11 +20,13 @@ function copyHtmlFiles() {
         "terms-conditions.html",
       ];
 
-      // Copiar sitemap.xml y robots.txt desde public/ a dist/
+      // Copiar sitemap.xml, robots.txt y .htaccess a dist/
       const publicDir = join(process.cwd(), "public");
       const distDir = join(process.cwd(), "dist");
+      const rootDir = process.cwd();
 
       try {
+        // Copiar sitemap.xml desde public/
         if (existsSync(join(publicDir, "sitemap.xml"))) {
           copyFileSync(
             join(publicDir, "sitemap.xml"),
@@ -32,6 +34,7 @@ function copyHtmlFiles() {
           );
           console.log("✅ Copied sitemap.xml to dist/");
         }
+        // Copiar robots.txt desde public/
         if (existsSync(join(publicDir, "robots.txt"))) {
           copyFileSync(
             join(publicDir, "robots.txt"),
@@ -39,9 +42,14 @@ function copyHtmlFiles() {
           );
           console.log("✅ Copied robots.txt to dist/");
         }
+        // Copiar .htaccess desde la raíz del proyecto
+        if (existsSync(join(rootDir, ".htaccess"))) {
+          copyFileSync(join(rootDir, ".htaccess"), join(distDir, ".htaccess"));
+          console.log("✅ Copied .htaccess to dist/");
+        }
       } catch (error) {
         console.warn(
-          "⚠️  Could not copy sitemap.xml or robots.txt:",
+          "⚠️  Could not copy sitemap.xml, robots.txt or .htaccess:",
           error.message
         );
       }
