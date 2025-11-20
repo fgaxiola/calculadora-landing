@@ -37,14 +37,29 @@ const pages = {
       url: "https://roots.trade",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
+      inLanguage: "en-US",
+      image: "https://roots.trade/public/img/slider-img1.jpg",
+      screenshot: "https://roots.trade/public/img/slider-img1.jpg",
+      datePublished: "2024-01-01",
+      publisher: {
+        "@type": "Organization",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://roots.trade/public/img/logo-new.png",
+        },
+      },
       offers: {
         "@type": "Offer",
         price: "0",
         priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
       },
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: "4.5",
+        reviewCount: "10",
       },
     },
   },
@@ -58,6 +73,23 @@ const pages = {
     navLinks:
       '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/privacy-policy-content.html",
+    schemaType: "WebPage",
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Privacy Policy - ROOTS",
+      description:
+        "Privacy Policy for ROOTS - Rules Of Origin Trade Solutions. Learn how we collect, use, and protect your information.",
+      url: "https://roots.trade/privacy-policy",
+      inLanguage: "en-US",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+      },
+      datePublished: "2024-01-01",
+      dateModified: "2024-11-19",
+    },
   },
   "terms-conditions": {
     title: "Terms and Conditions | ROOTS - Rules Of Origin Trade Solutions",
@@ -70,6 +102,23 @@ const pages = {
     navLinks:
       '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/terms-conditions-content.html",
+    schemaType: "WebPage",
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Terms and Conditions - ROOTS",
+      description:
+        "Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions. Read our terms of service and usage policies.",
+      url: "https://roots.trade/terms-and-conditions",
+      inLanguage: "en-US",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+      },
+      datePublished: "2024-01-01",
+      dateModified: "2024-11-19",
+    },
   },
   about: {
     title: "About Us | ROOTS - Rules Of Origin Trade Solutions",
@@ -82,6 +131,31 @@ const pages = {
     navLinks:
       '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/about-content.html",
+    schemaType: "AboutPage",
+    schemaData: {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      name: "About ROOTS - Rules Of Origin Trade Solutions",
+      description:
+        "Learn about ROOTS - Rules Of Origin Trade Solutions. Our mission, vision, and commitment to simplifying rules of origin management.",
+      url: "https://roots.trade/about",
+      inLanguage: "en-US",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+      },
+      about: {
+        "@type": "Organization",
+        name: "ROOTS - Rules Of Origin Trade Solutions",
+        url: "https://roots.trade",
+        logo: "https://roots.trade/public/img/logo-new.png",
+        description:
+          "An interdisciplinary team of specialists with extensive experience in international trade, foreign trade, regulation, international agreements, and public policy.",
+      },
+      datePublished: "2024-01-01",
+      dateModified: "2024-11-19",
+    },
   },
 };
 
