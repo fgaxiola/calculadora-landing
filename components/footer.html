@@ -1,18 +1,64 @@
 <footer class="wrapper-fw bg-h1" id="contact">
   <div class="container grid-split-rows pp">
     <h1>Contact us</h1>
-    <div class="max-width-m border-b">
-      <script
-        charset="utf-8"
-        type="text/javascript"
-        src="//js.hsforms.net/forms/embed/v2.js"
-      ></script>
+    <div class="max-width-m border-b" id="hubspot-form-container">
       <script>
-        hbspt.forms.create({
-          region: "na1",
-          portalId: "39812753",
-          formId: "5cf03715-f363-45c5-925f-ed8e2d337450",
-        });
+        // Cargar HubSpot de forma diferida para mejorar FCP y LCP
+        (function () {
+          // Solo cargar cuando el usuario está cerca del formulario o después de un delay
+          let hubspotLoaded = false;
+
+          function loadHubSpotForm() {
+            if (hubspotLoaded) return;
+            hubspotLoaded = true;
+
+            const script = document.createElement("script");
+            script.charset = "utf-8";
+            script.type = "text/javascript";
+            script.src = "https://js.hsforms.net/forms/embed/v2.js";
+            script.async = true;
+            script.onload = function () {
+              if (window.hbspt && window.hbspt.forms) {
+                hbspt.forms.create({
+                  region: "na1",
+                  portalId: "39812753",
+                  formId: "5cf03715-f363-45c5-925f-ed8e2d337450",
+                  target: "#hubspot-form-container",
+                });
+              }
+            };
+            document.head.appendChild(script);
+          }
+
+          // Cargar cuando el usuario hace scroll cerca del formulario
+          const formContainer = document.getElementById(
+            "hubspot-form-container"
+          );
+          if (formContainer) {
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    loadHubSpotForm();
+                    observer.disconnect();
+                  }
+                });
+              },
+              {
+                rootMargin: "200px", // Cargar cuando está a 200px de distancia
+              }
+            );
+
+            observer.observe(formContainer);
+
+            // Fallback: cargar después de 3 segundos si no se ha hecho scroll
+            setTimeout(() => {
+              if (!hubspotLoaded) {
+                loadHubSpotForm();
+              }
+            }, 3000);
+          }
+        })();
       </script>
     </div>
     <div class="footer-links">

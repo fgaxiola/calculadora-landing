@@ -94,9 +94,9 @@ function copyHtmlFiles() {
 
           // Reemplazar las referencias a los assets si existen
           if (cssAsset && jsAsset) {
-            // Reemplazar el script de main.js con el asset procesado
+            // Reemplazar el script de main.js con el asset procesado (con o sin defer)
             htmlContent = htmlContent.replace(
-              /<script type="module" src="\/main\.js"><\/script>/,
+              /<script type="module"[^>]*src="\/main\.js"[^>]*><\/script>/,
               `<script type="module" crossorigin src="${jsAsset}"></script>`
             );
 

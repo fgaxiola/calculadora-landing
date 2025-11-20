@@ -158,6 +158,45 @@ function generateHTML(pageConfig) {
         </section>`;
   }
 
+  // Script inline para showSlide (debe estar disponible antes de que se ejecuten los onclick)
+  const inlineSliderScript = isFullPage
+    ? `
+    <script>
+      // Función showSlide debe estar disponible inmediatamente para los onclick inline
+      window.showSlide = function (slide) {
+        // Verificar que el DOM esté listo
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            window.showSlide(slide);
+          });
+          return;
+        }
+        
+        // Ocultar todas las slides
+        document.querySelectorAll(".slide-content").forEach((item) => {
+          item.style.display = "none";
+        });
+        
+        // Mostrar la slide seleccionada
+        const targetSlide = document.querySelector("#slide-" + slide);
+        if (targetSlide) {
+          targetSlide.style.display = "block";
+        }
+        
+        // Actualizar clase active en los tabs
+        document.querySelectorAll(".slider-pager-item").forEach((item) => {
+          item.classList.remove("active");
+        });
+        
+        // Buscar el tab correspondiente y activarlo
+        const tabs = document.querySelectorAll(".slider-pager-item");
+        if (tabs[slide - 1]) {
+          tabs[slide - 1].classList.add("active");
+        }
+      };
+    </script>`
+    : "";
+
   // Construir HTML completo
   return `<!DOCTYPE html>
 <html lang="en-US">
@@ -175,7 +214,8 @@ function generateHTML(pageConfig) {
       </main>
       ${header}
     </div>
-    <script type="module" src="/main.js"></script>
+    ${inlineSliderScript}
+    <script type="module" src="/main.js" defer></script>
     ${
       isFullPage
         ? ""

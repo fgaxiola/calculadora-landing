@@ -1,4 +1,37 @@
 import "./main.css";
+
+// showSlide ahora está definido inline en el HTML para estar disponible inmediatamente
+// Solo verificamos si existe y la mejoramos si es necesario
+if (!window.showSlide) {
+  // Fallback si por alguna razón no se cargó el script inline
+  window.showSlide = function (slide) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", function () {
+        window.showSlide(slide);
+      });
+      return;
+    }
+
+    document.querySelectorAll(".slide-content").forEach((item) => {
+      item.style.display = "none";
+    });
+
+    const targetSlide = document.querySelector("#slide-" + slide);
+    if (targetSlide) {
+      targetSlide.style.display = "block";
+    }
+
+    document.querySelectorAll(".slider-pager-item").forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    const tabs = document.querySelectorAll(".slider-pager-item");
+    if (tabs[slide - 1]) {
+      tabs[slide - 1].classList.add("active");
+    }
+  };
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Actualizar año
   const currentYearEl = document.getElementById("current-year");
@@ -81,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Inicializar slider
+  // Inicializar slider - ocultar todas las imágenes excepto la primera
   document.querySelectorAll(".slide-content").forEach((item) => {
     item.style.display = "none";
   });
@@ -90,25 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
     slide1.style.display = "block";
   }
 
-  // Función showSlide (debe estar en el scope global para los onclick)
-  window.showSlide = function (slide) {
-    document.querySelectorAll(".slide-content").forEach((item) => {
-      item.style.display = "none";
-    });
-    if (slide != 3) {
-      const targetSlide = document.querySelector("#slide-" + slide);
-      if (targetSlide) {
-        targetSlide.style.display = "block";
-      }
-    } else {
-      const slide3 = document.querySelector("#slide-3");
-      if (slide3) {
-        slide3.style.display = "block";
-      }
-    }
-  };
-
-  // Pager active onclick
+  // Pager active onclick - manejar clicks en los tabs
   document
     .querySelectorAll(".slider-pager-item:not(.no-hover)")
     .forEach((item) => {

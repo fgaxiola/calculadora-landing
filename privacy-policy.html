@@ -5,14 +5,20 @@
 <meta charset="UTF-8" />
 <link rel="icon" type="image/png" href="./public/img/logo-new.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Preconnect para recursos externos -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://js.hsforms.net" />
+<link rel="dns-prefetch" href="https://js.hsforms.net" />
+<!-- Fuentes con font-display swap para mejor rendimiento -->
 <link
-  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700"
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
   rel="stylesheet"
 />
 <title>Privacy Policy | ROOTS - Rules Of Origin Trade Solutions</title>
 <meta name="description" content="Privacy Policy for ROOTS - Rules Of Origin Trade Solutions. Learn how we collect, use, and protect your information." />
+<meta name="theme-color" content="#0393a4" />
+<meta name="color-scheme" content="light" />
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://roots.trade/privacy-policy" />
@@ -165,18 +171,64 @@
         <footer class="wrapper-fw bg-h1" id="contact">
   <div class="container grid-split-rows pp">
     <h1>Contact us</h1>
-    <div class="max-width-m border-b">
-      <script
-        charset="utf-8"
-        type="text/javascript"
-        src="//js.hsforms.net/forms/embed/v2.js"
-      ></script>
+    <div class="max-width-m border-b" id="hubspot-form-container">
       <script>
-        hbspt.forms.create({
-          region: "na1",
-          portalId: "39812753",
-          formId: "5cf03715-f363-45c5-925f-ed8e2d337450",
-        });
+        // Cargar HubSpot de forma diferida para mejorar FCP y LCP
+        (function () {
+          // Solo cargar cuando el usuario está cerca del formulario o después de un delay
+          let hubspotLoaded = false;
+
+          function loadHubSpotForm() {
+            if (hubspotLoaded) return;
+            hubspotLoaded = true;
+
+            const script = document.createElement("script");
+            script.charset = "utf-8";
+            script.type = "text/javascript";
+            script.src = "https://js.hsforms.net/forms/embed/v2.js";
+            script.async = true;
+            script.onload = function () {
+              if (window.hbspt && window.hbspt.forms) {
+                hbspt.forms.create({
+                  region: "na1",
+                  portalId: "39812753",
+                  formId: "5cf03715-f363-45c5-925f-ed8e2d337450",
+                  target: "#hubspot-form-container",
+                });
+              }
+            };
+            document.head.appendChild(script);
+          }
+
+          // Cargar cuando el usuario hace scroll cerca del formulario
+          const formContainer = document.getElementById(
+            "hubspot-form-container"
+          );
+          if (formContainer) {
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    loadHubSpotForm();
+                    observer.disconnect();
+                  }
+                });
+              },
+              {
+                rootMargin: "200px", // Cargar cuando está a 200px de distancia
+              }
+            );
+
+            observer.observe(formContainer);
+
+            // Fallback: cargar después de 3 segundos si no se ha hecho scroll
+            setTimeout(() => {
+              if (!hubspotLoaded) {
+                loadHubSpotForm();
+              }
+            }, 3000);
+          }
+        })();
       </script>
     </div>
     <div class="footer-links">
@@ -207,6 +259,9 @@
         class="logo"
         src="./public/img/logo-header-new.png"
         alt="ROOTS - Rules Of Origin Trade Solutions Logo"
+        width="180"
+        height="60"
+        fetchpriority="high"
       />
     </a>
     <nav class="items">
@@ -220,7 +275,8 @@
 
 
     </div>
-    <script type="module" src="/main.js"></script>
+    
+    <script type="module" src="/main.js" defer></script>
     <style>
       .plain-text-content h1 {
         margin-bottom: 30px;
