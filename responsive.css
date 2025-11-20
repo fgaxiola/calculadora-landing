@@ -6,6 +6,9 @@
 
 /* Medium devices (tablets, 769-992px) */
 @media (max-width: 992px) {
+  .main-menu .btn.nm {
+    display: none !important;
+  }
   .text-block {
     padding: var(--text-block-padding-m);
   }
@@ -30,6 +33,14 @@
     display: none;
   }
   .main-menu .items .btn {
+    display: block;
+  }
+  .main-menu .items .mobile-menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-menu-overlay {
     display: block;
   }
   .team-profiles {

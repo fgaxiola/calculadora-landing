@@ -15,7 +15,27 @@
       <a class="btn nm" href="https://app.roots.trade" target="_self" aria-label="Login to ROOTS application">
         Login
       </a>
+      <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
     </nav>
   </div>
 </header>
+<div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
+  <button class="mobile-menu-close" aria-label="Close mobile menu">
+    <span>×</span>
+  </button>
+  <nav class="mobile-menu" aria-label="Mobile navigation">
+    <div class="mobile-menu-logo">
+      <img src="/public/img/logo-mobile.png" alt="ROOTS Logo" />
+    </div>
+    <div class="mobile-menu-links">
+      {{NAV_LINKS}}
+    </div>
+  </nav>
+</div>
 

@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     currentYearEl.textContent = new Date().getFullYear();
   }
 
-  // Función scroll
+  // Función scroll (definida primero para que esté disponible)
   function scroll(id) {
     const element = document.getElementById(id);
     if (element) {
@@ -49,6 +49,77 @@ document.addEventListener("DOMContentLoaded", function () {
         behavior: "smooth",
       });
     }
+  }
+
+  // Mobile menu functionality
+  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+  const mobileMenuClose = document.querySelector(".mobile-menu-close");
+  
+  if (mobileMenuToggle && mobileMenuOverlay) {
+    function openMobileMenu() {
+      mobileMenuOverlay.setAttribute("aria-hidden", "false");
+      mobileMenuToggle.setAttribute("aria-expanded", "true");
+      // Freeze scroll
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileMenu() {
+      mobileMenuOverlay.setAttribute("aria-hidden", "true");
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+      // Unfreeze scroll after transition
+      setTimeout(() => {
+        document.body.style.overflow = "";
+      }, 300);
+    }
+
+    // Toggle mobile menu
+    mobileMenuToggle.addEventListener("click", function () {
+      const isOpen = mobileMenuOverlay.getAttribute("aria-hidden") === "false";
+      
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Close menu button
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener("click", function () {
+        closeMobileMenu();
+      });
+    }
+
+    // Close menu when clicking on overlay background (not on links)
+    mobileMenuOverlay.addEventListener("click", function (e) {
+      if (e.target === mobileMenuOverlay) {
+        closeMobileMenu();
+      }
+    });
+
+    // Close menu when clicking on any link inside mobile menu
+    const mobileMenuLinks = mobileMenuOverlay.querySelectorAll("a");
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        
+        // If it's a hash link (same page), close menu with fade-out
+        if (href && (href.startsWith("#") || href.startsWith("/#"))) {
+          e.preventDefault();
+          closeMobileMenu();
+          // Small delay to allow fade-out animation, then scroll
+          setTimeout(() => {
+            const targetId = href.startsWith("/#") ? href.substring(2) : href.substring(1);
+            scroll(targetId);
+          }, 300);
+        } else {
+          // For external links or page navigation, close menu immediately
+          // Navigation will happen naturally
+          closeMobileMenu();
+        }
+      });
+    });
   }
 
   // Manejar scroll automático cuando se carga la página con hash (desde otra página)
