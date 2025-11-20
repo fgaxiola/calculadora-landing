@@ -24,7 +24,7 @@ const pages = {
     ogDescription:
       "Reliable, comprehensive, and robust intra-company management of rules of origin. Calculate, validate, and certify origin for multiple Free Trade Agreements.",
     navLinks:
-      '<a class="" href="#main-pillars">Main Pillars</a><a class="" href="#system-features">System Features</a><a class="" href="#benefits">Benefits</a><a class="" href="#usage">Usage</a><a class="" href="#contact">Contact us</a><a class="" href="/about">About us</a>',
+      '<a class="" href="#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/index-content.html",
     isFullPage: true, // Indica que tiene contenido completo HTML, no solo texto
     schemaType: "SoftwareApplication",
@@ -56,7 +56,7 @@ const pages = {
     ogTitle: "Privacy Policy - ROOTS",
     ogDescription: "Privacy Policy for ROOTS - Rules Of Origin Trade Solutions",
     navLinks:
-      '<a class="" href="/#main-pillars">Main Pillars</a><a class="" href="/#system-features">System Features</a><a class="" href="/#benefits">Benefits</a><a class="" href="/#usage">Usage</a><a class="" href="/#contact">Contact us</a><a class="" href="/about">About us</a>',
+      '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/privacy-policy-content.html",
   },
   "terms-conditions": {
@@ -68,7 +68,7 @@ const pages = {
     ogDescription:
       "Terms and Conditions for ROOTS - Rules Of Origin Trade Solutions",
     navLinks:
-      '<a class="" href="/#main-pillars">Main Pillars</a><a class="" href="/#system-features">System Features</a><a class="" href="/#benefits">Benefits</a><a class="" href="/#usage">Usage</a><a class="" href="/#contact">Contact us</a><a class="" href="/about">About us</a>',
+      '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/terms-conditions-content.html",
   },
   about: {
@@ -80,7 +80,7 @@ const pages = {
     ogDescription:
       "Learn about ROOTS and how we help companies manage rules of origin efficiently.",
     navLinks:
-      '<a class="" href="/#main-pillars">Main Pillars</a><a class="" href="/#system-features">System Features</a><a class="" href="/#benefits">Benefits</a><a class="" href="/#usage">Usage</a><a class="" href="/#contact">Contact us</a><a class="" href="/about">About us</a>',
+      '<a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>',
     contentFile: "pages/about-content.html",
   },
 };
@@ -207,8 +207,9 @@ function generateHTML(pageConfig) {
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="app">
-      <main>
+      <main id="main-content">
         ${mainContent}
         ${footerTemplate}
       </main>

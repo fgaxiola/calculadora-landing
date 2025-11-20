@@ -48,8 +48,9 @@
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="app">
-      <main>
+      <main id="main-content">
         <section class="wrapper-fw" id="main-content">
           <div class="container grid-split-rows pp p-min">
             <div class="flex p-big plain-text-content">
@@ -148,7 +149,7 @@
         </section>
         <footer class="wrapper-fw bg-h1" id="contact">
   <div class="container grid-split-rows pp">
-    <h1>Contact us</h1>
+    <h2>Contact us</h2>
     <div class="max-width-m border-b" id="hubspot-form-container">
       <script>
         // Cargar HubSpot de forma diferida para mejorar FCP y LCP
@@ -222,7 +223,10 @@
             target="_blank"
             class="icon tw"
             href="https://twitter.com/rootstradenolog"
-          ></a>
+            aria-label="Follow ROOTS on Twitter"
+          >
+            <span class="sr-only">Follow ROOTS on Twitter</span>
+          </a>
         </div>
       </div>
     </div>
@@ -242,9 +246,9 @@
         fetchpriority="high"
       />
     </a>
-    <nav class="items">
-      <a class="" href="/#main-pillars">Main Pillars</a><a class="" href="/#system-features">System Features</a><a class="" href="/#benefits">Benefits</a><a class="" href="/#usage">Usage</a><a class="" href="/#contact">Contact us</a><a class="" href="/about">About us</a>
-      <a class="btn nm" href="https://app.roots.trade" target="_self">
+    <nav class="items" aria-label="Main navigation">
+      <a class="" href="/#main-pillars" aria-label="Navigate to Main Pillars section">Main Pillars</a><a class="" href="/#system-features" aria-label="Navigate to System Features section">System Features</a><a class="" href="/#benefits" aria-label="Navigate to Benefits section">Benefits</a><a class="" href="/#usage" aria-label="Navigate to Usage section">Usage</a><a class="" href="/#contact" aria-label="Navigate to Contact us section">Contact us</a><a class="" href="/about" aria-label="Navigate to About us page">About us</a>
+      <a class="btn nm" href="https://app.roots.trade" target="_self" aria-label="Login to ROOTS application">
         Login
       </a>
     </nav>
