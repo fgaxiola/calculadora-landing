@@ -1,0 +1,29 @@
+# robots.txt for ROOTS - Rules Of Origin Trade Solutions
+# https://roots.trade/robots.txt
+
+User-agent: *
+
+# Solo permitir indexar las 4 rutas principales (clean URLs)
+Allow: /$
+Allow: /about$
+Allow: /privacy-policy$
+Allow: /terms-and-conditions$
+
+# Bloquear todo lo demás (assets, imágenes, CSS, JS, etc.)
+Disallow: /assets/
+Disallow: /img/
+Disallow: /*.html$
+Disallow: /*.css$
+Disallow: /*.js$
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Disallow: /*.webp$
+Disallow: /*.woff$
+Disallow: /*.woff2$
+
+# Sitemap location
+Sitemap: https://roots.trade/sitemap.xml
+

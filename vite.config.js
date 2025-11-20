@@ -1,5 +1,11 @@
 import { defineConfig } from "vite";
-import { copyFileSync, readFileSync, writeFileSync } from "fs";
+import {
+  copyFileSync,
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  readdirSync,
+} from "fs";
 import { join } from "path";
 
 // Plugin para copiar HTMLs adicionales a dist/ e inyectar assets
@@ -13,6 +19,32 @@ function copyHtmlFiles() {
         "privacy-policy.html",
         "terms-conditions.html",
       ];
+
+      // Copiar sitemap.xml y robots.txt desde public/ a dist/
+      const publicDir = join(process.cwd(), "public");
+      const distDir = join(process.cwd(), "dist");
+
+      try {
+        if (existsSync(join(publicDir, "sitemap.xml"))) {
+          copyFileSync(
+            join(publicDir, "sitemap.xml"),
+            join(distDir, "sitemap.xml")
+          );
+          console.log("✅ Copied sitemap.xml to dist/");
+        }
+        if (existsSync(join(publicDir, "robots.txt"))) {
+          copyFileSync(
+            join(publicDir, "robots.txt"),
+            join(distDir, "robots.txt")
+          );
+          console.log("✅ Copied robots.txt to dist/");
+        }
+      } catch (error) {
+        console.warn(
+          "⚠️  Could not copy sitemap.xml or robots.txt:",
+          error.message
+        );
+      }
 
       // Leer index.html para extraer las referencias a los assets
       const indexPath = join(process.cwd(), "dist", "index.html");
@@ -44,10 +76,9 @@ function copyHtmlFiles() {
         // Crear mapeo de imágenes desde los assets procesados
         const assetsDir = join(process.cwd(), "dist", "assets");
         const publicImgDir = join(process.cwd(), "public", "img");
-        const fs = require("fs");
 
-        if (fs.existsSync(assetsDir)) {
-          const assetFiles = fs.readdirSync(assetsDir);
+        if (existsSync(assetsDir)) {
+          const assetFiles = readdirSync(assetsDir);
           assetFiles.forEach((file) => {
             // Extraer el nombre base antes del hash (ej: slider-img1.100566aa.png -> slider-img1.jpg)
             const baseMatch = file.match(
@@ -63,8 +94,8 @@ function copyHtmlFiles() {
         // Para imágenes que no fueron procesadas por Vite, usar la ruta de public/img
         // Esto asegura que todas las imágenes funcionen
         // IMPORTANTE: Solo agregar si no está ya en el mapa (las procesadas tienen prioridad)
-        if (fs.existsSync(publicImgDir)) {
-          const publicFiles = fs.readdirSync(publicImgDir);
+        if (existsSync(publicImgDir)) {
+          const publicFiles = readdirSync(publicImgDir);
           publicFiles.forEach((file) => {
             // Solo agregar si no está ya en el mapa (no fue procesada por Vite)
             if (!imageMap.has(file)) {

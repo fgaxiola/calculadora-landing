@@ -14,6 +14,10 @@
     RewriteRule ^terms-and-conditions/?$ /terms-conditions.html [L]
     RewriteRule ^about/?$ /about.html [L]
     
+    # Permitir acceso a sitemap.xml y robots.txt
+    RewriteRule ^sitemap\.xml$ /sitemap.xml [L]
+    RewriteRule ^robots\.txt$ /robots.txt [L]
+    
     # Si el archivo o directorio existe, servirlo directamente
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
