@@ -281,6 +281,10 @@ function generateHTML(pageConfig) {
     </script>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TLW87JK3"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="app">
       <main id="main-content">
